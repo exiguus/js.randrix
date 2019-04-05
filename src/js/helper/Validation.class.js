@@ -2,7 +2,7 @@
  * @fileOverview Validation Class.
  * @author Simon Gattner <npm@0x38.de>
  * @license MIT
- * @version 1.0.0
+ * @version 1.0.1
  */
 export default class Validation {
   /**
