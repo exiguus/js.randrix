@@ -4,7 +4,7 @@ import Validate from './helper/Validation.class';
  * @fileOverview Randrix Class.
  * @author Simon Gattner <npm@0x38.de>
  * @license MIT
- * @version 1.0.1
+ * @version 1.0.2
  * @module {es6} Randrix
  */
 export default class Randrix {
