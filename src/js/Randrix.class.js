@@ -1,3 +1,5 @@
+import Validate from './helper/Validation.class';
+
 /**
  * @fileOverview Randrix Class.
  * @author Simon Gattner <npm@0x38.de>
@@ -7,7 +9,7 @@
  */
 export default class Randrix {
   /**
-   * Check and upgrade preload support.
+   * Display a random matrix panel.
    * @class Randrix
    * @classdesc Class to display a Randrix.
    * @param {object} options The Randrix options.
@@ -38,7 +40,7 @@ export default class Randrix {
       style: undefined,
       callback: null,
     };
-    this._options = this.optionsValidate(options);
+    this._options = Validate.options(options);
     if (this._options.error) return this.throwError();
     // ES2018 this._settings = {...this._defaults, ...this._options};
     this._settings = Object.assign({}, this._defaults, this._options);
@@ -61,71 +63,7 @@ export default class Randrix {
   }
 
   /**
-   * Has Randrix valid options?
-   * @function Randrix.optionsValidate
-   * @param {options} options for Randrix to validate.
-   * @return {object} options for Randrix.
-   */
-  optionsValidate(options) {
-      /* eslint-disable max-len */
-      let error = '';
-      switch (true) {
-        case (typeof options !== 'object' || Array.isArray(options)):
-          error = 'options must be an object';
-          break;
-        case (typeof options.message !== 'string' || options.message.length === 0):
-          error = 'options.message must be a string > 0';
-          break;
-        case (typeof options.selector !== 'string' && typeof options.selector !== 'undefined'):
-          error = 'options.selector must be a string or undefined';
-          break;
-        case (typeof options.selector === 'string' && document.querySelector(options.selector) === null):
-          error = 'options.selector must be a DOM selector';
-          break;
-        case (typeof options.width !== 'number' && typeof options.width !== 'undefined'):
-          error = 'options.width must be a number or undefined';
-          break;
-        case (typeof options.width === 'number' && options.width === 0):
-          error = 'options.width must be a number > 0 or undefined';
-          break;
-        case (typeof options.height !== 'number' && typeof options.height !== 'undefined'):
-          error = 'options.height must be a number or undefined';
-          break;
-        case (typeof options.height === 'number' && options.height === 0):
-          error = 'options.height must be a number > 0 or undefined';
-          break;
-        case (typeof options.interval !== 'number' && typeof options.interval !== 'undefined'):
-          error = 'options.interval must be a number or undefined';
-          break;
-        case (typeof options.interval === 'number' && options.interval === 0):
-          error = 'options.interval must be a number > 0 or undefined';
-          break;
-        case (typeof options.possible !== 'string' && typeof options.possible !== 'undefined'):
-          error = 'options.possible must be a string or undefined';
-          break;
-        case (typeof options.possible === 'string' && options.possible.length === 0):
-          error = 'options.possible must be a string > 0 or undefined';
-          break;
-        case (!Array.isArray(options.style) && typeof options.style !== 'undefined'):
-          error = 'options.style must be an array or undefined';
-          break;
-        case (Array.isArray(options.style) && options.style.length === 0):
-          error = 'options.style must be an array > 0';
-          break;
-        case (typeof options.callback !== 'function' && options.callback !== null && typeof options.callback !== 'undefined'):
-          error = 'options.callback must be a function, null or undefined';
-          break;
-      }
-        /* eslint-enable max-len */
-      if (error.length === 0) {
-        return options;
-      } else {
-        return {error: error};
-      }
-  }
-
-  /**
-   * Throw Erros if Randrix has invalid options.
+   * Throw Errors if Randrix has invalid options.
    * @function Randrix.throwErrors
    */
   throwError() {
@@ -283,7 +221,7 @@ export default class Randrix {
   /**
    * Match the Char Position on the Randrix
    * @function Randrix.charMatchIndex
-   * @param {stirng} char to match.
+   * @param {string} char to match.
    * @return {boolean} char has index matched or not.
    */
   charMatchIndex(char) {

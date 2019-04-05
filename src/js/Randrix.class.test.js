@@ -1,8 +1,8 @@
 import 'babel-polyfill';
-import helper from './helper/test';
+import TestHelper from './helper/TestHelper.class';
 import Randrix from './Randrix.class';
 
-const data = helper.data();
+const data = TestHelper.data();
 data.class.configs.forEach((config) => {
   describe(`Randrix Class ${config.name}: `, () => {
     let element = {};
@@ -40,14 +40,14 @@ data.class.configs.forEach((config) => {
         });
 
         if (method.expect) {
-          let value = helper.escape(method.value);
+          let value = TestHelper.escape(method.value);
           it(
             `randrix.${method.name}(${value}) return ${method.expect}`,
             () => {
             // eslint-disable-next-line no-unused-vars
             const randrix = new Randrix(config.settings);
             if (method.callBefore) eval(`randrix.${method.callBefore}()`);
-            if (data.debug) helper.debug(config, method, value);
+            if (data.debug) TestHelper.debug(config, method, value);
             expect(
               eval(`typeof randrix.${method.name}(value)`)
             ).toBe(method.expect);
