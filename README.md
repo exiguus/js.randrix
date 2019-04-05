@@ -187,8 +187,9 @@ matrix.next();
 
 ## Documentation
 
-* [jsDoc](https://exiguus.github.io/js.randrix/)
-* [Coverage](https://exiguus.github.io/js.randrix/coverage/)
+* [Example](https://exiguus.github.io/js.randrix/)
+* [jsDoc](https://exiguus.github.io/js.randrix/jsdoc/)
+* [Coverage](https://exiguus.github.io/js.randrix/jsdoc/coverage/)
 
 
 [tests]: https://img.shields.io/travis/exiguus/js.randrix/master.svg
