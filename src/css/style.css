@@ -1,0 +1,79 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+    font-family: Arial, "Open Sans", sans-serif;
+    font-size: 16px;
+    color: #f2f0ff;
+    background-color: #6f7077;
+    outline: 1em solid #f2f0ff;
+    margin: 1em;
+    padding: 0;
+    min-height: calc(100vh - 2em);
+    width: calc(100vw - 2em);
+}
+
+main {
+    display: block;
+    padding: 1em;
+    margin-bottom: 1em;
+    width: 100%;
+}
+
+header {
+  display: none;
+  width: 100%;
+  padding: 3em 1em 0 1em;
+}
+
+article {
+  padding: 0 .5em;
+  margin-bottom: 1em;
+  max-width: 600px;
+}
+
+[data-randrix] {
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: repeat(5, 4vw);
+  grid-template-rows: repeat(4, 12vw);
+  align-content: space-around;
+  justify-content: space-between;
+}
+
+[data-randrix-char] {
+  font-size: 2.4vw;
+  line-height: 6vw;
+  opacity: .6;
+  text-align: center;
+}
+
+[data-randrix-char-active="true"] {
+  font-weight: bold;
+  opacity: 1;
+}
+
+[data-randrix-style="monospace"] {
+  font-family: monospace;
+}
+
+[data-randrix-style="sans-serif"] {
+  font-family: sans-serif;
+}
+
+[data-randrix-style="serif"] {
+  font-family: serif;
+}
+
+[data-randrix-style="cursive"] {
+  font-family: cursive;
+}

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Randrix.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Randrix.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileOverview Randrix Class.
+ * @author Simon Gattner &lt;npm@0x38.de>
+ * @license MIT
+ * @version 1.0.0
+ * @module {es6} Randrix
+ */
+export default class Randrix {
+  /**
+   * Check and upgrade preload support.
+   * @class Randrix
+   * @classdesc Class to display a Randrix.
+   * @param {object} options The Randrix options.
+   * @param {string} options.message The Randrix message to display.
+   * @param {string} options.selector The Randrix element selector.
+   *  Default is '[data-randrix]'.
+   * @param {number} options.width The Randrix width to display.
+   *  Default is 5.
+   * @param {number} options.height The Randrix height to display.
+   *  Default is 6.
+   * @param {number} options.interval The Randrix interval to display.
+   *  Default is 100.
+   * @param {string} options.possible The Randrix possible Chars to display.
+   *  Default is 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.'.
+   * @param {array} options.style The Randrix random Char styles to display.
+   *  Default is undefined.
+   * @param {function} options.callback The Randrix callback to
+   *  run after stop. Default is null.
+   */
+  constructor(options) {
+    this._defaults = {
+      message: undefined,
+      selector: '[data-randrix]',
+      width: 5,
+      height: 6,
+      interval: 100,
+      possible: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+      style: undefined,
+      callback: null,
+    };
+    this._options = this.optionsValidate(options);
+    if (this._options.error) return this.throwError();
+    // ES2018 this._settings = {...this._defaults, ...this._options};
+    this._settings = Object.assign({}, this._defaults, this._options);
+    this._message = this._settings.message.split('');
+    this._element = document.querySelector(this._settings.selector);
+    this._width = this._settings.width;
+    this._height = this._settings.height;
+    this._interval = this._settings.interval;
+    this._possible = this._settings.possible;
+    this._possibleLength = this._possible.length;
+    this._style = this._settings.style;
+    this._styleLength = (this._style) ? this._style.length : 0;
+    this._styleEnable = this._styleLength > 0;
+    this._index = 0;
+    this._matrix = [];
+    this._x = 0;
+    this._y = 0;
+    this._callback = this._settings.callback;
+    this._calledback = false;
+  }
+
+  /**
+   * Has Randrix valid options?
+   * @function Randrix.optionsValidate
+   * @param {options} options for Randrix to validate.
+   * @return {object} options for Randrix.
+   */
+  optionsValidate(options) {
+      /* eslint-disable max-len */
+      let error = '';
+      switch (true) {
+        case (typeof options !== 'object' || Array.isArray(options)):
+          error = 'options must be an object';
+          break;
+        case (typeof options.message !== 'string' || options.message.length === 0):
+          error = 'options.message must be a string > 0';
+          break;
+        case (typeof options.selector !== 'string' &amp;&amp; typeof options.selector !== 'undefined'):
+          error = 'options.selector must be a string or undefined';
+          break;
+        case (typeof options.selector === 'string' &amp;&amp; document.querySelector(options.selector) === null):
+          error = 'options.selector must be a DOM selector';
+          break;
+        case (typeof options.width !== 'number' &amp;&amp; typeof options.width !== 'undefined'):
+          error = 'options.width must be a number or undefined';
+          break;
+        case (typeof options.width === 'number' &amp;&amp; options.width === 0):
+          error = 'options.width must be a number > 0 or undefined';
+          break;
+        case (typeof options.height !== 'number' &amp;&amp; typeof options.height !== 'undefined'):
+          error = 'options.height must be a number or undefined';
+          break;
+        case (typeof options.height === 'number' &amp;&amp; options.height === 0):
+          error = 'options.height must be a number > 0 or undefined';
+          break;
+        case (typeof options.interval !== 'number' &amp;&amp; typeof options.interval !== 'undefined'):
+          error = 'options.interval must be a number or undefined';
+          break;
+        case (typeof options.interval === 'number' &amp;&amp; options.interval === 0):
+          error = 'options.interval must be a number > 0 or undefined';
+          break;
+        case (typeof options.possible !== 'string' &amp;&amp; typeof options.possible !== 'undefined'):
+          error = 'options.possible must be a string or undefined';
+          break;
+        case (typeof options.possible === 'string' &amp;&amp; options.possible.length === 0):
+          error = 'options.possible must be a string > 0 or undefined';
+          break;
+        case (!Array.isArray(options.style) &amp;&amp; typeof options.style !== 'undefined'):
+          error = 'options.style must be an array or undefined';
+          break;
+        case (Array.isArray(options.style) &amp;&amp; options.style.length === 0):
+          error = 'options.style must be an array > 0';
+          break;
+        case (typeof options.callback !== 'function' &amp;&amp; options.callback !== null &amp;&amp; typeof options.callback !== 'undefined'):
+          error = 'options.callback must be a function, null or undefined';
+          break;
+      }
+        /* eslint-enable max-len */
+      if (error.length === 0) {
+        return options;
+      } else {
+        return {error: error};
+      }
+  }
+
+  /**
+   * Throw Erros if Randrix has invalid options.
+   * @function Randrix.throwErrors
+   */
+  throwError() {
+    throw new Error(this._options.error);
+  }
+
+  /**
+   * Is there a callback and not executed yet?
+   * @function Randrix.isCallback
+   * @return {boolean} is there a callback or not and is it executed or not.
+   */
+  isCallback() {
+    return typeof this._callback === 'function' &amp;&amp; this._calledback === false;
+  }
+
+  /**
+   * Random Char from Possible Chars
+   * @function Randrix.char
+   * @return {string} the Char.
+   */
+  char() {
+    return this._possible.charAt(
+      Math.floor(
+        Math.random() * this._possibleLength
+      )
+    );
+  }
+
+  /**
+   * Style the Char from Possible Styles
+   * @function Randrix.charStyle
+   * @return {string} the Char Style.
+   */
+  charStyle() {
+    return (this._style) ? this._style[
+      Math.floor(Math.random() * this._styleLength)
+    ] : '';
+  }
+
+  /**
+   * Create a Char on the Randrix
+   * @function Randrix.charCreate
+   * @param {number} x position of the Char.
+   * @param {number} y position of the Char.
+   * @return {boolean} is the Char created.
+   */
+  charCreate(x, y) {
+    const id = `x${x}-y${y}`;
+    this._matrix[id] = {
+      element: this.charCreateElement(id) || {},
+      x: x,
+      y: y,
+      interval: this.charStart(id) || (() => false),
+    };
+    return true;
+  }
+
+  /**
+   * Create the Char Element on the Randrix
+   * @function Randrix.charCreateElement
+   * @param {object} id of the Char.
+   * @return {object} element of the Char.
+   */
+  charCreateElement(id) {
+    const char = this.char();
+    const element = document.createElement('span');
+    const text = document.createTextNode(char);
+
+    element.appendChild(text);
+    element.setAttribute('data-randrix-char', id);
+
+    if (this._styleEnable &amp;&amp; this.charStyle()) {
+      element.setAttribute('data-randrix-style', this.charStyle());
+    }
+    this._element.appendChild(element);
+
+    return element;
+  }
+
+  /**
+   * Char is the Last Child on the Randrix
+   * @function Randrix.charIsLastChild
+   * @param {string} id of the Char.
+   * @return {boolean} Char is the last child or not.
+   */
+  charIsLastChild(id) {
+    return this._x === this._width - 1 &amp;&amp; this._y === this._height - 1;
+  }
+
+  /**
+   * Update the Char on the Randrix
+   * @function Randrix.charUpdate
+   * @param {string} id of the Char.
+   */
+  charUpdate(id) {
+    const char = this.char();
+
+    this.charUpdateElement(id, char);
+    this.charUpdateStatus(id, char);
+  }
+
+  /**
+   * Update the Char on the Randrix
+   * @function Randrix.charUpdateElement
+   * @param {string} id of the Char.
+   * @param {string} char to update.
+   */
+  charUpdateElement(id, char) {
+    if (this._matrix[id] &amp;&amp; this._matrix[id].element) {
+      if (this._styleEnable) {
+        this._matrix[id].element
+          .setAttribute('data-randrix-style', this.charStyle());
+      }
+      this._matrix[id].element.innerHTML = char;
+    }
+  }
+
+  /**
+   * Update the Char on the Randrix
+   * @function Randrix.charUpdateStatus
+   * @param {string} id of the Char.
+   * @param {string} char to update.
+   */
+  charUpdateStatus(id, char) {
+    if (this._message.length !== this._index) {
+      (this.charIsLastChild()) ? this.reset() :
+        (!this.charMatch(id, char)) || this.charActivate(id);
+    } else {
+      this.charStop(id);
+      if (this.isCallback()) this._calledback = true &amp;&amp; this._callback();
+    }
+  }
+
+  /**
+   * Match the Char on the Randrix
+   * @function Randrix.charMatch
+   * @param {object} id of the Char.
+   * @param {string} char to match.
+   * @return {boolean} char has matched or not.
+   */
+  charMatch(id, char) {
+    if (this.charMatchIndex(char) &amp;&amp; this.charMatchPosition(id)) {
+      if (this._debug) {
+        // eslint-disable-next-line no-console
+        console.log(
+          'next', 'x' + this._x, 'y' + this._y, 'c' + char
+        );
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Match the Char Position on the Randrix
+   * @function Randrix.charMatchIndex
+   * @param {stirng} char to match.
+   * @return {boolean} char has index matched or not.
+   */
+  charMatchIndex(char) {
+    return this._message[this._index] === char;
+  }
+
+  /**
+   * Match the Char Position on the Randrix
+   * @function Randrix.charMatchPosition
+   * @param {object} id of the Char.
+   * @return {boolean} char has position matched or not.
+   */
+  charMatchPosition(id) {
+    return (this._matrix[id]) ?
+      // start in the first lines
+      (this._index === 0 &amp;&amp; this._matrix[id].x === 0) ||
+       // forward in the current line
+      (this._x === this._matrix[id].x &amp;&amp; this._y + 1 === this._matrix[id].y) ||
+      // forward to the next line
+      (this._x + 1 === this._matrix[id].x &amp;&amp; this._matrix[id].y === 0) :
+    false;
+  }
+
+  /**
+   * Activate the Char on the Randrix
+   * @function Randrix.charActivate
+   * @param {string} id of the Char.
+   * @return {boolean} is the Char successful activated.
+   */
+  charActivate(id) {
+    if (this._matrix[id]) {
+      this._index = this._index + 1;
+      this._x = this._matrix[id].x;
+      this._y = this._matrix[id].y;
+      this.charStop(id);
+      this._matrix[id].element
+        .setAttribute('data-randrix-char-active', 'true');
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Stop the Char on the Randrix
+   * @function Randrix.charStop
+   * @param {string} id of the Char.
+   * @return {function} clearInterval function of the Char.
+   */
+  charStop(id) {
+    return (this._matrix[id]) ? clearInterval(this._matrix[id].interval) :
+      () => false;
+  }
+
+  /**
+   * Start the Char on the Randrix
+   * @function Randrix.charStart
+   * @param {string} id of the Char.
+   * @return {function} setInterval function of the Char.
+   */
+  charStart(id) {
+    return setInterval(() => {
+      this.charUpdate(id);
+    }, this._interval);
+  }
+
+  /**
+   * Create the Randrix
+   * @function Randrix.create
+   * @return {boolean} done.
+   */
+  create() {
+    for (let x = 0; x &lt; this._width; x++) {
+      for (let y = 0; y &lt; this._height; y++) {
+        this.charCreate(x, y);
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Reset the Randrix
+   * @function Randrix.reset
+   * @return {boolean} done.
+   */
+  reset() {
+    this._element.innerHTML = '';
+    this.stop(
+      () => {
+        this.constructor(this._settings);
+        this.start();
+      }
+    );
+    return true;
+  }
+
+  /**
+   * Stop the Randrix
+   * @function Randrix.stop
+   * @param {function} callback to execute.
+   * @return {boolean} done.
+   */
+  stop(callback) {
+    for (const item in this._matrix) {
+      if (this._matrix.hasOwnProperty(item)) {
+        clearInterval(this._matrix[item].interval);
+      }
+    }
+    if (typeof callback === 'function') callback();
+    return true;
+  }
+
+  /**
+   * Start the Randrix
+   * @function Randrix.start
+   * @return {boolean} done.
+   */
+  start() {
+    (this._index === 0) ? this.create() : this.reset();
+    return true;
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Randrix.html">Randrix</a></li></ul><h3>Classes</h3><ul><li><a href="module-Randrix-Randrix.html">Randrix</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Apr 05 2019 14:52:34 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

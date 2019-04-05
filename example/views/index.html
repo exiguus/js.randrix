@@ -1,0 +1,199 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+          <article>
+            <section>
+              <h2>NPM</h2>
+              <dl>
+                <dt>installation</dt>
+                <dd><code>npm install randrix --save</code></dd>
+              </dl>
+
+              <h2>GIT</h2>
+              <dl>
+                <dt>ZIP</dt>
+                <dd><a href="https://github.com/exiguus/js.randrix/archive/v1.0.0.zip" title="Github Release ZIP"><code>https://github.com/exiguus/js.randrix/archive/v1.0.0.zip</code></a></dd>
+                <dt>GZIP</dt>
+                <dd><a href="https://github.com/exiguus/js.randrix/archive/v1.0.0.tar.gz" title="Github Release GZIP"><code>https://github.com/exiguus/js.randrix/archive/v1.0.0.tar.gz</code></a></dd>
+
+              </dl>
+            </section>
+            <section>
+
+            <h2>Usage</h2>
+
+            <h3>ES Module</h3>
+<pre>
+<code>
+{{ "import Randrix from 'randrix';
+
+const randrix = new Randrix({
+  message: 'randrix.js',
+  selector: '[data-randrix]',
+  possible: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.',
+});
+randrix.start();" | escape }}
+</code>
+</pre>
+
+            <h3>UMD Module</h3>
+<pre>
+<code>
+{{ "<script type=\"text/javascript\" src=\"node_modules/js.randrix/dist/randrix.min.js\"></script>
+<script type=\"text/javascript\">
+  var matrix = new window.Randrix.default({
+    message: 'randrix.js',
+    possible: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.'
+  });
+  matrix.start();
+</script>" | escape }}
+</code>
+</pre>
+
+            <h3>CSS</h3>
+<pre>
+<code>
+{{ '[data-randrix] {
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: repeat(6, 4vw);
+  grid-template-rows: repeat(5, 8vw);
+  align-content: space-around;
+  justify-content: space-between;
+}
+
+[data-randrix-char] {
+  font-size: 2.4vw;
+  line-height: 6vw;
+  opacity: .6;
+  text-align: center;
+}
+
+[data-randrix-char-active="true"] {
+  font-weight: bold;
+  opacity: 1;
+}
+
+[data-randrix-style="monospace"] {
+  font-family: monospace;
+}
+
+[data-randrix-style="sans-serif"] {
+  font-family: sans-serif;
+}
+
+[data-randrix-style="serif"] {
+  font-family: serif;
+}
+
+[data-randrix-style="cursive"] {
+  font-family: cursive;
+}
+' | escape }}
+</code>
+</pre>
+
+            <h3>ES Module Callback &mdash; Promise async, await</h3>
+<pre>
+<code>
+{{ "import Randrix from 'randrix';
+
+
+async function f() {
+  const promise = new Promise((resolve, reject) => {
+    const randrix = new Randrix({
+      message: 'RandomMatrix',
+      selector: '[data-randrix]',
+      callback: () => resolve(true),
+    });
+    randrix.start();
+  });
+
+  const result = await promise;
+  if (result) second();
+}
+
+function second() {
+  document.querySelector('[data-randrix]').innerHTML = '';
+  const randrix = new Randrix({
+    message: 'randrix.js',
+    selector: '[data-randrix]',
+    possible: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.',
+  });
+  randrix.start();
+}
+
+f();" | escape }}
+</code>
+</pre>
+            <h3>ES Module Callback &mdash; Generator, yield, next()</h3>
+<pre>
+<code>
+{{"import Randrix from 'randrix';
+
+function* panels(configs) {
+  for (let i = 0; i < configs.length; i++) {
+    yield panel(configs[i], i);
+  }
+}
+
+function panel(config, i) {
+  const wait = (i === 0) ? i : 3000;
+  setTimeout( () => {
+    document.querySelector('[data-randrix]').innerHTML = '';
+    const matrix = new Randrix(config);
+    matrix.start();
+  }, wait);
+}
+
+const configs = [{
+    message: 'Random',
+    width: 4,
+    height: 5,
+    callback: () => matrix.next(),
+  },
+  {
+    message: 'Matrix',
+    width: 4,
+    height: 5,
+    callback: () => matrix.next(),
+  },
+  {
+    message: 'Panel',
+    width: 4,
+    height: 5,
+    callback: () => matrix.next(),
+  },
+  {
+    message: 'randrix.js',
+    width: 4,
+    height: 5,
+    possible: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.',
+  },
+];
+const matrix = panels(configs);
+matrix.next();
+" | escape }}
+</code>
+</pre>
+            <h3>ES Module Custom</h3>
+<pre>
+<code>
+{{ "import Randrix from 'randrix';
+
+const randrix = new Randrix( {
+      message: 'RandomMatrix',
+      selector: '[data-randrix]',
+      width: 6,
+      height: 8,
+      interval: 100,
+      possible: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+      style: ['serif', 'sans-serif', 'monospace'],
+      callback: () => { document.body.style.backgroundColor = '#abcdef'; },
+    });
+randrix.start();" | escape }}
+</code>
+</pre>
+            </section>
+          </article>
+{% endblock %}
