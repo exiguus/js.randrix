@@ -10,7 +10,7 @@ A programable, random matrix panel.
 [![npm][npm]][npm-url]
 
 ```console
-npm install --save js.randrix
+npm install --save randrix
 ```
 
 ### ES Module
@@ -195,14 +195,14 @@ matrix.next();
 [tests-url]: https://travis-ci.org/exiguus/js.randrix
 
 [maintainability]:
-https://api.codeclimate.com/v1/badges/463068933abaf66a335e/maintainability
+https://api.codeclimate.com/v1/badges/192506e0ccb2e5f72435/maintainability
 [maintainability-url]:
 https://codeclimate.com/github/exiguus/js.randrix/maintainability
 
 [coverage]:
-https://api.codeclimate.com/v1/badges/463068933abaf66a335e/test_coverage
+https://api.codeclimate.com/v1/badges/192506e0ccb2e5f72435/test_coverage
 [coverage-url]:
 https://codeclimate.com/github/exiguus/js.randrix/test_coverage
 
-[npm]: https://img.shields.io/npm/v/js.randrix.svg
-[npm-url]: https://npmjs.com/package/js.randrix
+[npm]: https://img.shields.io/npm/v/randrix.svg
+[npm-url]: https://npmjs.com/package/randrix
