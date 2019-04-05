@@ -2,7 +2,7 @@
 [![coverage][coverage]][coverage-url]
 [![maintainability][maintainability]][maintainability-url]
 
-# randtrix
+# randrix
 A programable, random matrix panel.
 
 ## Usage
