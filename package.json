@@ -93,13 +93,13 @@
     "UMD Module",
     "AMD Module"
   ],
-  "main": "src/js/Randtrix.class.js",
+  "main": "src/js/Randrix.class.js",
   "author": "Simon Gattner <npm@0x38.de>",
   "license": "MIT",
-  "homepage": "https://exiguus.github.io/js.randtrix/",
+  "homepage": "https://exiguus.github.io/js.randrix/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/exiguus/js.randtrix.git"
+    "url": "https://github.com/exiguus/js.randrix.git"
   },
   "dependencies": {},
   "engines": {
