@@ -74,6 +74,7 @@ footer {
 
 footer .logo .javascript {
   height: 1em;
+  vertical-align: -0.12em;
 }
 
 footer {
@@ -89,24 +90,28 @@ footer::after {
   height: 0px;
 }
 
+footer a:hover,
+footer a:active,
+footer a:focus {
+  font-style: italic;
+}
+
 footer p {
   display: block;
-  float: right;
-  max-width: 33.333%
+  padding: .2em 0;
+  line-height: 1.4em;
+  vertical-align: -.1em;
+  letter-spacing: 0.2em;
 }
 
 footer p a {
   margin-right: 0;
-  letter-spacing: 0.2em;
-  vertical-align: -.1em;
   text-decoration: none;
 }
 
 footer ul {
   display: block;
-  float: left;
   margin-left: -.5em;
-  max-width: 66.666%;
 }
 
 footer ul li {
@@ -289,6 +294,19 @@ dd code {
   }
   footer {
     margin: 0 4em;
+  }
+
+  footer ul,
+  footer p {
+    max-width: 50%;
+  }
+
+  footer p {
+    float: right;
+  }
+
+  footer ul {
+    float: left;
   }
 
   [data-randrix] {

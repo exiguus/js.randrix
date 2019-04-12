@@ -26,9 +26,13 @@ app.use(minifyHTML({
   override: true,
   exception_url: false,
   htmlMinifier: {
-    removeComments: true,
+    maxLineLength: 96,
+    collapseBooleanAttributes: true,
     collapseWhitespace: true,
-    removeEmptyAttributes: true,
+    decodeEntities: true,
+    keepClosingSlash: true,
+    sortAttributes: true,
+    minifyCSS: true,
     minifyJS: true,
   },
 }));
