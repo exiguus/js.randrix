@@ -62,11 +62,7 @@ header h2 {
   border-bottom: 2px solid #f2f0ff;
 }
 
-header p {
-  display: block;
-  unicode-bidi: embed;
-  font-family: monospace;
-  white-space: pre;
+header pre {
   overflow: hidden;
 }
 
@@ -138,6 +134,31 @@ main ::-webkit-scrollbar-thumb {
   outline: 1px solid rgba(0, 0, 0, .9);
 }
 
+main pre {
+  position: relative;
+  padding: 0 2em 3em;
+  font-size: 110%;
+  color: #6f776f;
+  background-color: #f2f0ff;
+  overflow-x: auto;
+  opacity: .7;
+  animation: fadeInBoxShadow 1s linear;
+  transition: all 1s ease-out;
+}
+
+main pre::after {
+  content: "</code>";
+  position: absolute;
+  right: 1em;
+  bottom: 1em;
+  font-size: 2em;
+}
+
+main pre.inline {
+  border-bottom: 2px solid #f2f0ff;
+  font-size: 140%;
+}
+
 section:not(:last-child),
 header section {
   border-bottom: 1px solid #f2f0ff;
@@ -163,7 +184,7 @@ h1, h2, h3, h4, p {
   margin-bottom: 1em;
 }
 
-pre, dl {
+dl, main pre {
   margin-bottom: 4em;
 }
 
@@ -200,31 +221,6 @@ dd code {
   min-width: 160px;
   font-size: 150%;
   border-left: 1px solid #f2f0ff;
-}
-
-pre {
-  position: relative;
-  padding: 0 2em 3em;
-  font-size: 110%;
-  color: #6f776f;
-  background-color: #f2f0ff;
-  overflow-x: auto;
-  opacity: .7;
-  animation: fadeInBoxShadow 1s linear;
-  transition: all 1s ease-out;
-}
-
-pre::after {
-  content: "</code>";
-  position: absolute;
-  right: 1em;
-  bottom: 1em;
-  font-size: 2em;
-}
-
-pre.inline {
-  border-bottom: 2px solid #f2f0ff;
-  font-size: 140%;
 }
 
 

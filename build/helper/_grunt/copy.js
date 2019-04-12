@@ -10,7 +10,7 @@ module.exports = {
   // },
   coverage: {
     cwd: '<%= paths.coverage %>/report-html/',
-    dest: '<%= paths.docs %>/<%= paths.coverage %>/',
+    dest: '<%= paths.jsdoc %>/<%= paths.coverage %>/',
     expand: true,
     src: [
       '**',
@@ -26,10 +26,18 @@ module.exports = {
   },
   static: {
     cwd: '<%= paths.static %>/',
-    dest: '<%= paths.docs %>/<%= paths.static %>/',
+    dest: '<%= paths.jsdoc %>/<%= paths.static %>/',
     expand: true,
     src: [
       '**',
+    ],
+  },
+  favicon: {
+    cwd: '<%= paths.example %>/<%= paths.static %>/',
+    dest: '<%= paths.docs %>/',
+    expand: true,
+    src: [
+      'favicon.*',
     ],
   },
 };

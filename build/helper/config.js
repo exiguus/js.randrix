@@ -15,8 +15,12 @@ config.options = {
     dev: 'src',
     // dist folder with minified and optimized files
     dist: 'dist',
-    // doc folder jsdoc3
-    docs: 'docs/jsdoc',
+    // example folder
+    example: 'example',
+    // docs folder
+    docs: 'docs',
+    // jsdoc folder jsdoc3
+    jsdoc: 'docs/jsdoc',
     // src folder
     src: 'src',
     // coverage report

@@ -3,7 +3,7 @@ module.exports = {
     src: ['src/js/*.js'],
     options: {
       configuration: '../../jsdoc.json',
-      destination: '<%= paths.docs %>',
+      destination: '<%= paths.jsdoc %>',
       readme: 'README.md',
     },
   },

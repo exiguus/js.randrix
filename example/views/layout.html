@@ -6,6 +6,10 @@
         <title>Randrix &mdash; A programable, random matrix panel</title>
         <meta name="description" content="Randrix &mdash; UMD and ES Module :: A programable, random matrix panel">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preload" as="style" href="static/css/style.css" />
+        <link rel="preload" as="script" href="static/js/js.randrix/randrix.min.js" />
+        <link rel="preload" as="script" href="static/js/index.js" />
+        <link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" />
         <link rel="stylesheet" href="static/css/style.css" />
     </head>
     <body class="development">
@@ -13,7 +17,8 @@
         <section>
           <h1>Randrix</h1>
           <h2>A programable, random matrix panel</h2>
-<p>
+<pre>
+<code>
 {{ "// ES Module and UMD Module is available
 import Randrix from 'randrix';
 
@@ -25,7 +30,8 @@ const randrix = new Randrix({
 
 randrix.start();
 " | escape }}
-</p>
+</code>
+</pre>
 
         </section>
         <section>
@@ -56,20 +62,9 @@ randrix.start();
           </a>
         </p>
       </footer>
-      <script src="static/js/js.randrix/randrix.min.js"></script>
-      <script async>
-          var matrix = new window.Randrix.default({
-            message: 'randrix.js',
-            possible: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.',
-          });
-          matrix.start();
+      <script defer src="static/js/js.randrix/randrix.min.js"></script>
+      <script defer src="static/js/index.js"></script>
+      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
       </script>
-      <script async>
-        var link = document.createElement( 'link' );
-        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css';
-        link.rel = 'stylesheet';document.getElementsByTagName( 'head' )[0].appendChild( link );
-      </script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-      <script async>hljs.initHighlightingOnLoad();</script>
   </body>
 </html>

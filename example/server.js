@@ -8,6 +8,9 @@ const expressNunjucks = require('express-nunjucks');
 
 const compression = require('compression');
 const minify = require('express-minify');
+const minifyHTML = require('express-minify-html');
+
+const favicon = require('serve-favicon');
 
 app.use(compression());
 app.use(minify(
@@ -19,6 +22,19 @@ app.use(minify(
     }
   )
 );
+app.use(minifyHTML({
+  override: true,
+  exception_url: false,
+  htmlMinifier: {
+    removeComments: true,
+    collapseWhitespace: true,
+    collapseBooleanAttributes: true,
+    removeAttributeQuotes: true,
+    removeEmptyAttributes: true,
+    minifyJS: true,
+  },
+}));
+app.use(favicon(path.join(__dirname, 'static', 'favicon.ico')));
 app.use(
   '/static',
   express.static(path.join(__dirname, 'static'))

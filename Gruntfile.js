@@ -47,6 +47,7 @@ module.exports = function(grunt) {
     'usebanner',
     'jsdoc',
     'copy:static',
+    'copy:favicon',
   ]);
 
   grunt.registerTask('default', ['dist']);
